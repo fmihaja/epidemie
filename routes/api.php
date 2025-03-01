@@ -19,5 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('regions', RegionController::class);
+Route::apiResource('patients', PatientController::class);
 Route::apiResource('case_patients', CasePatientController::class);
 Route::apiResource('case_contacts', CaseContactController::class);
+
+

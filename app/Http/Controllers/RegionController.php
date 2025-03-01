@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Region;
-use App\Models\desease;
+use App\Models\Disease;
 
 class RegionController extends Controller
 {
