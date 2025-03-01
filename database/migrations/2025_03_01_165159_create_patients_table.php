@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('firstName')->nullable();
             $table->date('birthDate');
+            $table->String('gender');
             $table->string('email')->unique();
             $table->timestamps();
 

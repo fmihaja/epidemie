@@ -21,7 +21,7 @@ class DiseaseController extends Controller
         $disease = Disease::find($id);
 
         if (!$disease) {
-            return response()->json(['error' => 'Disease not found'], 404);
+            return response()->json(['error' => 'Maladie introuvalble'], 404);
         }
 
         return response()->json($disease);

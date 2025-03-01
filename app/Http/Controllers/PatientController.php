@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Cloudstudio\Ollama\Facades\Ollama;
+
 
 class PatientController extends Controller
 {
@@ -13,8 +15,14 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::all();  // Vous pouvez ajuster la pagination si nécessaire
-        return response()->json($patients);
+        /* $patients = Patient::all();
+        return response()->json($patients); */
+        return Ollama::agent('You are a weather expert...')
+            ->prompt('Why is the sky blue?')
+            ->model('llama2')
+            ->options(['temperature' => 0.8])
+            ->stream(false)
+            ->ask();
     }
 
     /**
@@ -29,7 +37,7 @@ class PatientController extends Controller
     {
         $request->validate([
             'firstName' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
+            'name' => 'string|max:255',
             'birthDate' => 'required|date',
             'gender' => 'required|string|in:Homme,Femme,Autre',
         ]);
@@ -58,7 +66,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        return view('patients.edit', compact('patient'));
+        return response()->json(['message' => 'Form to edit new patient']);
     }
 
     public function update(Request $request, Patient $patient)

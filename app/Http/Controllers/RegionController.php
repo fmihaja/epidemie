@@ -52,8 +52,12 @@ class RegionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Region $region)
+    public function show($id)
     {
+        $region = Region::find($id);
+        if(!$region){
+            return response()->json(['message' => 'Region introuvable'], 404);
+        }
         return response()->json($region);
     }
 
@@ -68,7 +72,7 @@ class RegionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Region $region)
+    /* public function update(Request $request, Region $region)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -83,17 +87,17 @@ class RegionController extends Controller
             'message' => 'Région mise à jour avec succès.',
             'data' => $region
         ]);
-    }
+    } */
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Region $region)
+    /* public function destroy(Region $region)
     {
         $region->delete();
         return response()->json([
             'message' => 'Région supprimée avec succès.'
         ]);
 
-    }
+    } */
 }

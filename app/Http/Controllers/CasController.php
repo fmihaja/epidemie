@@ -13,7 +13,7 @@ class CasController extends Controller
     // Afficher la liste de tous les cas
     public function index()
     {
-        $cases = Cas::all();
+        $cases = Cas::with(['disease'])->get();
         return response()->json($cases);
     }
 
