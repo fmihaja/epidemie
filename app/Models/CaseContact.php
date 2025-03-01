@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class CaseContact extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'contact_type',
-        'contact_date',
+        'contact_id',
+        'case_id',
     ];
 }
