@@ -6,6 +6,8 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\CasController;
 use App\Http\Controllers\StatController;
+use App\Http\Controllers\GoogleApiController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,3 +44,4 @@ Route::prefix('stats')->group(function () {
     Route::get('regions', [StatController::class, 'regionStats']);
     Route::get('global', [StatController::class, 'globalStats']);
 });
+Route::post('/google-api', [GoogleApiController::class, 'getData']);
