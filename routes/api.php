@@ -5,6 +5,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\CasController;
+use App\Http\Controllers\StatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +35,10 @@ Route::apiResource('patients', PatientController::class);
 
 // Case routes
 Route::apiResource('cases', CasController::class);
+
+Route::prefix('stats')->group(function () {
+    Route::get('disease-status', [StatController::class, 'diseaseStatusStats']);
+    Route::get('disease/{diseaseId}', [StatController::class, 'diseaseStats']);
+    Route::get('regions', [StatController::class, 'regionStats']);
+    Route::get('global', [StatController::class, 'globalStats']);
+});
