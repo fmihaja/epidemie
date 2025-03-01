@@ -4,20 +4,17 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CasePatient>
- */
 class CasePatientFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'diagnosis_date' => $this->faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
+            'status' => $this->faker->randomElement([
+                'suspecté',
+                'confirmé', 
+                'guéri'
+            ])
         ];
     }
 }
