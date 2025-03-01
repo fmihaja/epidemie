@@ -15,4 +15,16 @@ class Cas extends Model
         'status',
         'symptomes'
     ];
+
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class, 'id_patient');
+    }
+
+    public function disease(): BelongsTo
+    {
+        return $this->belongsTo(Disease::class, 'id_patient');
+    }
+
+
 }
