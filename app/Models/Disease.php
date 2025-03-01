@@ -14,7 +14,8 @@ class Disease extends Model
         'name',
         'pathogene',
         'transmissions',
-        'incubation'
+        'incubation',
+        'description'
     ];
 
     public function regions(): BelongsToMany

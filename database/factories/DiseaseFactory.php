@@ -14,6 +14,7 @@ class DiseaseFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'pathogene' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
             'transmissions' => $this->faker->randomElement(['direct', 'indirect']),
             'incubation' => $this->faker->numberBetween(1, 14),
         ];

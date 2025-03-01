@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('pathogene');
+            $table->string('description');
             $table->enum('transmissions',['direct','indirect']);
             $table->integer('incubation');
             $table->timestamps();
