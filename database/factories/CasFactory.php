@@ -13,7 +13,7 @@ class CasFactory extends Factory
     {
         return [
             'dateDiagnosis' => $this->faker->date(),
-            'status' => $this->faker->randomElement(['confirmé', 'suspects', 'rétablie', 'normal']),
+            'status' => $this->faker->randomElement(['confirmé', 'suspects', 'rétablie', 'normal','décédé']),
             'symptomes' => $this->faker->sentence(),
             'patient_id' => null, // Défini dynamiquement dans le seeder
             'disease_id' => null, // Défini dynamiquement dans le seeder
