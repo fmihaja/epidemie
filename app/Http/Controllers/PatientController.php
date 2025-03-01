@@ -12,7 +12,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Patient::all());
     }
 
     /**
@@ -29,6 +29,15 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'firstName' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'birthDate' => 'required|date',
+            'gender' => 'required|string|max:10',
+        ]);
+
+        $patient = Patient::create($validatedData);
+        return response()->json($patient, 201);
     }
 
     /**
@@ -37,6 +46,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         //
+        return response()->json($patient->load('casesPatients'));
     }
 
     /**
@@ -53,6 +63,15 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         //
+        $validatedData = $request->validate([
+            'firstName' => 'sometimes|string|max:255',
+            'name' => 'sometimes|string|max:255',
+            'birthDate' => 'sometimes|date',
+            'gender' => 'sometimes|string|max:10',
+        ]);
+
+        $patient->update($validatedData);
+        return response()->json($patient);
     }
 
     /**
@@ -61,5 +80,7 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         //
+        $patient->delete();
+        return response()->json(['message' => 'Patient deleted successfully']);
     }
 }

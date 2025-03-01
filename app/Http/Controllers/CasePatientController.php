@@ -12,15 +12,7 @@ class CasePatientController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(CasePatient::with('patients')->get());
     }
 
     /**
@@ -28,7 +20,15 @@ class CasePatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'diagnosis_date' => 'required|date',
+            'status' => 'required|in:suspecté,confirmé,guéri',
+            'patient_id' => 'required|exists:patients,id',
+        ]);
+
+        $casePatient = CasePatient::create($validatedData);
+
+        return response()->json($casePatient, 201);
     }
 
     /**
@@ -36,15 +36,7 @@ class CasePatientController extends Controller
      */
     public function show(CasePatient $casePatient)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CasePatient $casePatient)
-    {
-        //
+        return response()->json($casePatient->load('patients'));
     }
 
     /**
@@ -52,7 +44,15 @@ class CasePatientController extends Controller
      */
     public function update(Request $request, CasePatient $casePatient)
     {
-        //
+        $validatedData = $request->validate([
+            'diagnosis_date' => 'sometimes|date',
+            'status' => 'sometimes|in:suspecté,confirmé,guéri',
+            'patient_id' => 'sometimes|exists:patients,id',
+        ]);
+
+        $casePatient->update($validatedData);
+
+        return response()->json($casePatient);
     }
 
     /**
@@ -60,6 +60,8 @@ class CasePatientController extends Controller
      */
     public function destroy(CasePatient $casePatient)
     {
-        //
+        $casePatient->delete();
+
+        return response()->json(['message' => 'Case deleted successfully']);
     }
 }
