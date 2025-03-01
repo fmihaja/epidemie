@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('disease_region', function (Blueprint $table) {
             $table->foreignId('region_id')->constrained();
             $table->foreignId('disease_id')->constrained();
-            $table->timestamps(); // Optionnel (si vous voulez suivre les dates)
+            $table->timestamps();
         });
     }
 

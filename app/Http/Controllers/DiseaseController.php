@@ -2,64 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Disease;
 use Illuminate\Http\Request;
+use App\Models\Disease;
+use Validator;
 
 class DiseaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Afficher la liste des maladies
     public function index()
     {
-        //
+        $diseases = Disease::all();
+        return response()->json($diseases);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Afficher une maladie spécifique
+    public function show($id)
     {
-        //
+        $disease = Disease::find($id);
+
+        if (!$disease) {
+            return response()->json(['error' => 'Disease not found'], 404);
+        }
+
+        return response()->json($disease);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Créer une nouvelle maladie
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'pathogene' => 'required|string',
+            'transmissions' => 'required|in:direct,indirect',
+            'incubation' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $disease = Disease::create([
+            'name' => $request->name,
+            'pathogene' => $request->pathogene,
+            'transmissions' => $request->transmissions,
+            'incubation' => $request->incubation,
+        ]);
+
+        return response()->json($disease, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Disease $disease)
+    // Mettre à jour une maladie existante
+    public function update(Request $request, $id)
     {
-        //
+        $disease = Disease::find($id);
+
+        if (!$disease) {
+            return response()->json(['error' => 'Disease not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'string',
+            'pathogene' => 'string',
+            'transmissions' => 'in:direct,indirect',
+            'incubation' => 'integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $disease->update($request->only('name', 'pathogene', 'transmissions', 'incubation'));
+
+        return response()->json($disease);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Disease $disease)
+    // Supprimer une maladie
+    public function destroy($id)
     {
-        //
-    }
+        $disease = Disease::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Disease $disease)
-    {
-        //
-    }
+        if (!$disease) {
+            return response()->json(['error' => 'Disease not found'], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Disease $disease)
-    {
-        //
+        $disease->delete();
+
+        return response()->json(['message' => 'Disease deleted successfully']);
     }
 }

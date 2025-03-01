@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Region extends Model
 {
     use HasFactory;
-    
+
     protected $fillable=[
         'name',
         'lat',
@@ -21,4 +21,5 @@ class Region extends Model
     {
         return $this->belongsToMany(Disease::class);
     }
+
 }
