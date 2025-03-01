@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Patient;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_patients', function (Blueprint $table) {
+        Schema::create('cas', function (Blueprint $table) {
             $table->id();
-            $table->date('diagnosis_date');
-            $table->enum('status', [
-                'suspecté', 
-                'confirmé', 
-                'guéri', 
-            ])->default('suspecté');
+            $table->date('dateDiagnosis');
+            $table->enum('status',['confirmé','suspects','rétablie','normal'])->default('normal');
+            $tables->string('symptomes');
             $table->timestamps();
         });
     }
@@ -29,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('case_patients');
+        Schema::dropIfExists('cas');
     }
-
-
 };
