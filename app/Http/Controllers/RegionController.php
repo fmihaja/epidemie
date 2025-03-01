@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RegionController extends Controller
 {
@@ -12,15 +13,11 @@ class RegionController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $regions = Region::with('diseases')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $regions
+        ]);
     }
 
     /**
@@ -28,7 +25,33 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'lat' => 'required|numeric',
+            'long' => 'required|numeric',
+            'population' => 'required|integer|min:0',
+            'diseases' => 'nullable|array',
+            'diseases.*' => 'exists:diseases,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $region = Region::create($request->only(['name', 'lat', 'long', 'population']));
+
+        if ($request->has('diseases')) {
+            $region->diseases()->attach($request->diseases);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Region created successfully',
+            'data' => $region->load('diseases')
+        ], 201);
     }
 
     /**
@@ -36,15 +59,10 @@ class RegionController extends Controller
      */
     public function show(Region $region)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Region $region)
-    {
-        //
+        return response()->json([
+            'status' => 'success',
+            'data' => $region->load('diseases')
+        ]);
     }
 
     /**
@@ -52,7 +70,33 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string|max:255',
+            'lat' => 'sometimes|required|numeric',
+            'long' => 'sometimes|required|numeric',
+            'population' => 'sometimes|required|integer|min:0',
+            'diseases' => 'nullable|array',
+            'diseases.*' => 'exists:diseases,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $region->update($request->only(['name', 'lat', 'long', 'population']));
+
+        if ($request->has('diseases')) {
+            $region->diseases()->sync($request->diseases);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Region updated successfully',
+            'data' => $region->load('diseases')
+        ]);
     }
 
     /**
@@ -60,6 +104,12 @@ class RegionController extends Controller
      */
     public function destroy(Region $region)
     {
-        //
+        $region->diseases()->detach();
+        $region->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Region deleted successfully'
+        ]);
     }
 }

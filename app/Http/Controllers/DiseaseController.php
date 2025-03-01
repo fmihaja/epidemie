@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Disease;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DiseaseController extends Controller
 {
@@ -12,15 +13,11 @@ class DiseaseController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $diseases = Disease::with('regions')->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $diseases
+        ]);
     }
 
     /**
@@ -28,7 +25,33 @@ class DiseaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'pathogene' => 'required|string|max:255',
+            'transmissions' => 'required|string',
+            'incubation' => 'required|string|max:255',
+            'regions' => 'nullable|array',
+            'regions.*' => 'exists:regions,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $disease = Disease::create($request->only(['name', 'pathogene', 'transmissions', 'incubation']));
+
+        if ($request->has('regions')) {
+            $disease->regions()->attach($request->regions);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Disease created successfully',
+            'data' => $disease->load('regions')
+        ], 201);
     }
 
     /**
@@ -36,15 +59,10 @@ class DiseaseController extends Controller
      */
     public function show(Disease $disease)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Disease $disease)
-    {
-        //
+        return response()->json([
+            'status' => 'success',
+            'data' => $disease->load('regions')
+        ]);
     }
 
     /**
@@ -52,7 +70,33 @@ class DiseaseController extends Controller
      */
     public function update(Request $request, Disease $disease)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string|max:255',
+            'pathogene' => 'sometimes|required|string|max:255',
+            'transmissions' => 'sometimes|required|string',
+            'incubation' => 'sometimes|required|string|max:255',
+            'regions' => 'nullable|array',
+            'regions.*' => 'exists:regions,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $disease->update($request->only(['name', 'pathogene', 'transmissions', 'incubation']));
+
+        if ($request->has('regions')) {
+            $disease->regions()->sync($request->regions);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Disease updated successfully',
+            'data' => $disease->load('regions')
+        ]);
     }
 
     /**
@@ -60,6 +104,12 @@ class DiseaseController extends Controller
      */
     public function destroy(Disease $disease)
     {
-        //
+        $disease->regions()->detach();
+        $disease->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Disease deleted successfully'
+        ]);
     }
 }
