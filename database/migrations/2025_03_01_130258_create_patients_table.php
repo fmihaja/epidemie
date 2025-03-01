@@ -30,8 +30,5 @@ return new class extends Migration
         Schema::dropIfExists('patients');
     }
 
-    public function casesPatients()
-{
-    return $this->belongsToMany(CasePatient::class);
-}
+
 };

@@ -16,4 +16,9 @@ class Patient extends Model
         'gender',
         'healthStatus'
     ];
+
+    public function casesPatients()
+    {
+        return $this->belongsToMany(CasePatient::class, 'pivot_case_patient', 'patient_id', 'case_patients_id');
+    }
 }
