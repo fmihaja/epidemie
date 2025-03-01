@@ -20,12 +20,12 @@ class Cas extends Model
 
     public function patient(): BelongsTo
     {
-        return $this->belongsTo(Patient::class, 'id_patient');
+        return $this->belongsTo(Patient::class);
     }
 
     public function disease(): BelongsTo
     {
-        return $this->belongsTo(Disease::class, 'id_patient');
+        return $this->belongsTo(Disease::class);
     }
 
 

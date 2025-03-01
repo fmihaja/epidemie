@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('cas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained('patients'); 
-            $table->foreignId('disease_id')->constrained('diseases');
+            $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade'); 
+            $table->foreignId('disease_id')->constrained('diseases')->onDelete('cascade');
             $table->date('dateDiagnosis');
-            $table->enum('status',['confirmé','suspects','rétablie','normal'])->default('normal');
+            $table->enum('status',['confirmé','suspects','rétablie','normal','décédé'])->default('normal');
             $table->string('symptomes');
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. Créer des maladies
-        $diseases = Disease::factory(3)->create();
+        $diseases = Disease::factory(10)->create();
 
         // 3. Associer les maladies aux régions existantes
         $allRegions = Region::all(); // Récupère toutes les régions du seeder
