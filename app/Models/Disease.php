@@ -15,4 +15,9 @@ class Disease extends Model
         'transmissions',
         'incubation'
     ];
+
+    public function region(): BelongsToMany
+    {
+        return $this->belongsToMany(Region::class);
+    }
 }

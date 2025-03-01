@@ -15,4 +15,9 @@ class Region extends Model
         'long',
         'population'
     ];
+
+    public function disease(): BelongsToMany
+    {
+        return $this->belongsToMany(Disease::class);
+    }
 }
