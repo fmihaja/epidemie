@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     use HasFactory;
-
     protected $fillable=[
-        'firstName',
         'name',
+        'firstName',
         'birthDate',
-        'gender',
-        'healthStatus'
+        'email'
     ];
+
+    public function cas(): HasMany
+    {
+        return $this->hasMany(Cas::class);
+    }
+
+
+
 }

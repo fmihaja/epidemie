@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\CasePatient;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('firstName');
             $table->string('name');
-            $table->date('birthDate');
-            $table->string('gender');
+            $table->double('lat');
+            $table->double('long');
+            $table->integer('population');
             $table->timestamps();
         });
     }
@@ -27,11 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('regions');
     }
-
-    public function casesPatients()
-{
-    return $this->belongsToMany(CasePatient::class);
-}
 };
