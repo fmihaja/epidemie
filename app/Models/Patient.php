@@ -14,7 +14,7 @@ class Patient extends Model
         'name',
         'birthDate',
         'gender',
-        'healthStatus'
+        // 'healthStatus'
     ];
 
     public function casesPatients()
