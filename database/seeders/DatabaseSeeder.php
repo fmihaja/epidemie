@@ -26,15 +26,19 @@ class DatabaseSeeder extends Seeder
         //     PatientSeeder::class, // Si vous avez des patients
         //     CasePatientSeeder::class,
         // ]);
-        $regions = Region::factory(5)->create();
+        $this->call([
+            RegionSeeder::class
+        ]);
 
         // Créer des maladies
         $diseases = Disease::factory(3)->create();
 
+        $allRegions = Region::all();
+
         // Associer les maladies aux régions (relation many-to-many)
         foreach ($diseases as $disease) {
             $disease->regions()->attach(
-                $regions->random(rand(1, 3))->pluck('id')->toArray()
+                $allRegions->random(rand(1, 3))->pluck('id')->toArray()
             );
         }
 

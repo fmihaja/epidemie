@@ -2,8 +2,9 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\DiseaseRegionController;
+use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\CasController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,16 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-<<<<<<< HEAD
 Route::apiResource('regions', RegionController::class);
 Route::apiResource('patients', PatientController::class);
-Route::apiResource('case_patients', CasePatientController::class);
-Route::apiResource('case_contacts', CaseContactController::class);
-=======
-Route::apiResource('disease_regions', DiseaseRegionController::class);
-Route::apiResource('regions', RegionController::class);
-Route::apiResource('patients', PatientController::class);
-Route::apiResource('patients', PatientController::class);
->>>>>>> main
+Route::apiResource('cas', CasController::class);
+Route::apiResource('diseases', DiseaseController::class);
+
 
 

@@ -13,17 +13,11 @@ class RegionController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $regions = Region::orderBy('name')->paginate(10);
-        $diseases =Disease::all();
-        return view('regions.index', compact('regions', 'diseases'));
-=======
         $regions = Region::with('diseases')->get();
 
         return response()->json([
             'regions' => $regions
         ]);
->>>>>>> main
     }
 
     /**
@@ -31,11 +25,7 @@ class RegionController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        return view('regions.create');
-=======
         return response()->json(['message' => 'Form to create new region']);
->>>>>>> main
     }
 
     /**
@@ -50,18 +40,13 @@ class RegionController extends Controller
             'longitude' => 'nullable|integer',
         ]);
 
-<<<<<<< HEAD
-        Region::create($request->all());
-
-        return redirect()->route('regions.index')->with('success', 'Région ajoutée avec succès.');
-=======
         $region = Region::create($request->all());
 
         return response()->json([
             'message' => 'Région ajoutée avec succès.',
             'data' => $region
         ]);
->>>>>>> main
+
     }
 
     /**
@@ -69,11 +54,7 @@ class RegionController extends Controller
      */
     public function show(Region $region)
     {
-<<<<<<< HEAD
-        return view('regions.show', compact('region'));
-=======
         return response()->json($region);
->>>>>>> main
     }
 
     /**
@@ -81,11 +62,7 @@ class RegionController extends Controller
      */
     public function edit(Region $region)
     {
-<<<<<<< HEAD
-        return view('regions.edit', compact('region'));
-=======
         return response()->json(['message' => 'Form to edit region', 'data' => $region]);
->>>>>>> main
     }
 
     /**
@@ -102,14 +79,10 @@ class RegionController extends Controller
 
         $region->update($request->all());
 
-<<<<<<< HEAD
-        return redirect()->route('regions.index')->with('success', 'Région mise à jour avec succès.');
-=======
         return response()->json([
             'message' => 'Région mise à jour avec succès.',
             'data' => $region
         ]);
->>>>>>> main
     }
 
     /**
@@ -118,12 +91,9 @@ class RegionController extends Controller
     public function destroy(Region $region)
     {
         $region->delete();
-<<<<<<< HEAD
-        return redirect()->route('regions.index')->with('success', 'Région supprimée avec succès.');
-=======
         return response()->json([
             'message' => 'Région supprimée avec succès.'
         ]);
->>>>>>> main
+
     }
 }

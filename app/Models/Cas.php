@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cas extends Model
 {
-    
+
     use HasFactory;
 
     protected $fillable=[

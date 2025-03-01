@@ -8,12 +8,12 @@ use App\Models\Disease;
 use Illuminate\Http\Request;
 use Validator;
 
-class CaseController extends Controller
+class CasController extends Controller
 {
     // Afficher la liste de tous les cas
     public function index()
     {
-        $cases = Cas::with(['patient', 'disease'])->get(); // Charger les relations patient et maladie
+        $cases = Cas::all();
         return response()->json($cases);
     }
 

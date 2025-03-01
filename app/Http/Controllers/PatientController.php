@@ -7,16 +7,7 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-<<<<<<< HEAD
-    public function index()
-    {
-        $patients = Patient::paginate(10);
-        return view('patients.index', compact('patients'));
-    }
 
-    /**
-     * Afficher le formulaire de création d'un patient.
-=======
     /**
      * Afficher la liste des patients avec pagination au format JSON.
      */
@@ -28,20 +19,12 @@ class PatientController extends Controller
 
     /**
      * Afficher le formulaire de création d'un patient (si nécessaire pour votre application web).
->>>>>>> main
      */
     public function create()
     {
         return view('patients.create');
     }
 
-    /**
-<<<<<<< HEAD
-     * Enregistrer un nouveau patient.
-=======
-     * Enregistrer un nouveau patient (retourner un format JSON pour l'API).
->>>>>>> main
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -51,19 +34,7 @@ class PatientController extends Controller
             'gender' => 'required|string|in:Homme,Femme,Autre',
         ]);
 
-<<<<<<< HEAD
-        Patient::create($request->all());
 
-        return redirect()->route('patients.index')->with('success', 'Patient ajouté avec succès.');
-    }
-
-    /**
-     * Afficher les détails d'un patient.
-     */
-    public function show(Patient $patient)
-    {
-        return view('patients.show', compact('patient'));
-=======
         $patient = Patient::create($request->all());
 
         // Retourner un format JSON avec le patient créé
@@ -79,7 +50,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         return response()->json($patient);
->>>>>>> main
+
     }
 
     /**
@@ -90,13 +61,6 @@ class PatientController extends Controller
         return view('patients.edit', compact('patient'));
     }
 
-    /**
-<<<<<<< HEAD
-     * Mettre à jour un patient.
-=======
-     * Mettre à jour un patient (retourner un format JSON).
->>>>>>> main
-     */
     public function update(Request $request, Patient $patient)
     {
         $request->validate([
@@ -108,13 +72,6 @@ class PatientController extends Controller
 
         $patient->update($request->all());
 
-<<<<<<< HEAD
-        return redirect()->route('patients.index')->with('success', 'Patient mis à jour avec succès.');
-    }
-
-    /**
-     * Supprimer un patient.
-=======
         // Retourner une réponse JSON indiquant que le patient a été mis à jour
         return response()->json([
             'message' => 'Patient mis à jour avec succès.',
@@ -122,21 +79,14 @@ class PatientController extends Controller
         ]);
     }
 
-    /**
-     * Supprimer un patient (retourner un format JSON).
->>>>>>> main
-     */
     public function destroy(Patient $patient)
     {
         $patient->delete();
-<<<<<<< HEAD
-        return redirect()->route('patients.index')->with('success', 'Patient supprimé avec succès.');
-=======
+
 
         // Retourner une réponse JSON avec un message de succès
         return response()->json([
             'message' => 'Patient supprimé avec succès.'
         ]);
->>>>>>> main
     }
 }
