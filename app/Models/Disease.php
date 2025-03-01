@@ -16,7 +16,7 @@ class Disease extends Model
         'incubation'
     ];
 
-    public function region(): BelongsToMany
+    public function regions(): BelongsToMany
     {
         return $this->belongsToMany(Region::class);
     }

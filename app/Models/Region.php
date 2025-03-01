@@ -16,7 +16,7 @@ class Region extends Model
         'population'
     ];
 
-    public function disease(): BelongsToMany
+    public function diseases(): BelongsToMany
     {
         return $this->belongsToMany(Disease::class);
     }

@@ -12,6 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         //
+        Schema::create('disease_region', function (Blueprint $table) {
+            $table->foreignId('region_id')->constrained();
+            $table->foreignId('disease_id')->constrained();
+            $table->timestamps(); // Optionnel (si vous voulez suivre les dates)
+        });
     }
 
     /**
@@ -20,5 +25,6 @@ return new class extends Migration
     public function down(): void
     {
         //
+        Schema::dropIfExists('region_disease');
     }
 };

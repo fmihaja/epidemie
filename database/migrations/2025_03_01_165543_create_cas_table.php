@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('dateDiagnosis');
             $table->enum('status',['confirmé','suspects','rétablie','normal'])->default('normal');
-            $tables->string('symptomes');
+            $table->string('symptomes');
             $table->timestamps();
         });
     }
