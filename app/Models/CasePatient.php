@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CasePatient extends Model
 {
     use HasFactory;
+
+    protected $fillable=[
+        'diagnosis_date',
+        'status'
+    ];
 }
