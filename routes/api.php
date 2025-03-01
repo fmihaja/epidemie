@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('regions', RegionController::class);
+Route::apiResource('case_patients', CasePatientController::class);
+Route::apiResource('case_contacts', CaseContactController::class);

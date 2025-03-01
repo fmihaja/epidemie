@@ -12,7 +12,8 @@ class CasePatientController extends Controller
      */
     public function index()
     {
-        //
+        $cases = CasePatient::orderBy('diagnosis_date', 'desc')->paginate(10);
+        return view('case_patients.index', compact('cases'));
     }
 
     /**
@@ -20,7 +21,7 @@ class CasePatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('case_patients.create');
     }
 
     /**
@@ -28,7 +29,14 @@ class CasePatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'diagnosis_date' => 'required|date',
+            'status' => 'required|in:suspecté,confirmé,guéri',
+        ]);
+
+        CasePatient::create($request->all());
+
+        return redirect()->route('case_patients.index')->with('success', 'Cas patient ajouté avec succès.');
     }
 
     /**
@@ -36,7 +44,7 @@ class CasePatientController extends Controller
      */
     public function show(CasePatient $casePatient)
     {
-        //
+        return view('case_patients.show', compact('casePatient'));
     }
 
     /**
@@ -44,7 +52,7 @@ class CasePatientController extends Controller
      */
     public function edit(CasePatient $casePatient)
     {
-        //
+        return view('case_patients.edit', compact('casePatient'));
     }
 
     /**
@@ -52,7 +60,14 @@ class CasePatientController extends Controller
      */
     public function update(Request $request, CasePatient $casePatient)
     {
-        //
+        $request->validate([
+            'diagnosis_date' => 'required|date',
+            'status' => 'required|in:suspecté,confirmé,guéri',
+        ]);
+
+        $casePatient->update($request->all());
+
+        return redirect()->route('case_patients.index')->with('success', 'Cas patient mis à jour avec succès.');
     }
 
     /**
@@ -60,6 +75,7 @@ class CasePatientController extends Controller
      */
     public function destroy(CasePatient $casePatient)
     {
-        //
+        $casePatient->delete();
+        return redirect()->route('case_patients.index')->with('success', 'Cas patient supprimé avec succès.');
     }
 }
