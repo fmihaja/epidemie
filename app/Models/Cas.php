@@ -13,7 +13,9 @@ class Cas extends Model
     protected $fillable=[
         'dateDiagnosis',
         'status',
-        'symptomes'
+        'symptomes',
+        'patient_id',
+        'disease_id'
     ];
 
     public function patient(): BelongsTo
