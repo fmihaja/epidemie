@@ -27,16 +27,16 @@ class DatabaseSeeder extends Seeder
         $diseases=Disease::all();
         foreach ($diseases as $disease) {
             $disease->regions()->attach(
-                $allRegions->random(rand(1, 5))->pluck('id')->toArray() // Associe 1 à 5 régions aléatoires
+                $allRegions->random(rand(1, 23))->pluck('id')->toArray() // Associe 1 à 5 régions aléatoires
             );
         }
 
         // 4. Créer des patients
-        $patients = Patient::factory(50)->create();
+        $patients = Patient::factory(550)->create();
 
         // 5. Créer des cas pour chaque patient
         foreach ($patients as $patient) {
-            Cas::factory(rand(1, 20))->create([
+            Cas::factory(rand(200, 300))->create([
                 'patient_id' => $patient->id,
                 'disease_id' => $diseases->random()->id,
             ]);

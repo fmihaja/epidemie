@@ -21,7 +21,7 @@ class StatController extends Controller
             ->get();
 
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'data' => $stats
         ]);
     }
@@ -39,7 +39,7 @@ class StatController extends Controller
             ->get();
             
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'disease' => $disease->name,
             'data' => $stats
         ]);
@@ -69,7 +69,7 @@ class StatController extends Controller
             ->get();
             
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'data' => $stats
         ]);
     }

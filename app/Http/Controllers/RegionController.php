@@ -15,7 +15,7 @@ class RegionController extends Controller
     {
         $regions = Region::with('diseases')->get();
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'data' => $regions
         ]);
     }
@@ -60,7 +60,7 @@ class RegionController extends Controller
     public function show(Region $region)
     {
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'data' => $region->load('diseases')
         ]);
     }
@@ -81,7 +81,7 @@ class RegionController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'message' => 'error',
                 'errors' => $validator->errors()
             ], 422);
         }
