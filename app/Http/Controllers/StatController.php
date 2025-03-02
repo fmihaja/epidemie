@@ -57,22 +57,23 @@ class StatController extends Controller
                 'regions.long',
                 'regions.lat',
                 'diseases.name as disease_name',
-                'cas.status', // Ajout du statut
-                DB::raw('COUNT(DISTINCT cas.patient_id) as cases')
+                'cas.status',
+                DB::raw('COUNT(DISTINCT cas.patient_id) as cases'),
+                DB::raw('MAX("cas"."dateDiagnosis") as date_diagnostique'),
             )
             ->join('disease_region', 'regions.id', '=', 'disease_region.region_id')
             ->join('diseases', 'diseases.id', '=', 'disease_region.disease_id')
             ->join('cas', 'diseases.id', '=', 'cas.disease_id')
-            ->where('cas.status', '!=', 'recovered')
-            // Groupement par région, maladie et statut
+            // ->where('cas.status', '!=', 'recovered')
             ->groupBy('regions.id', 'diseases.id', 'cas.status')
             ->get();
-            
+                
         return response()->json([
             'message' => 'success',
             'data' => $stats
         ]);
     }
+    
     
     /**
      * Get global disease statistics
