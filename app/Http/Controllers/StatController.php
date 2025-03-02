@@ -56,10 +56,10 @@ class StatController extends Controller
                 'regions.population',
                 'regions.long',
                 'regions.lat',
+                'regions.created_at as date_region',
                 'diseases.name as disease_name',
                 'cas.status',
                 DB::raw('COUNT(DISTINCT cas.patient_id) as cases'),
-                DB::raw('MAX("cas"."dateDiagnosis") as date_diagnostique'),
             )
             ->join('disease_region', 'regions.id', '=', 'disease_region.region_id')
             ->join('diseases', 'diseases.id', '=', 'disease_region.disease_id')

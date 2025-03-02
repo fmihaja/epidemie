@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
         }
 
         // 4. Créer des patients
-        $patients = Patient::factory(550)->create();
+        $patients = Patient::factory(50)->create();
 
         // 5. Créer des cas pour chaque patient
         foreach ($patients as $patient) {
-            Cas::factory(rand(200, 300))->create([
+            Cas::factory(rand(1, 10))->create([
                 'patient_id' => $patient->id,
                 'disease_id' => $diseases->random()->id,
             ]);
