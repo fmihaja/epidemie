@@ -26,10 +26,11 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'firstName' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
             'birthDate' => 'required|date',
             'email' => 'required|email|max:255|unique:patients',
+            
         ]);
 
         if ($validator->fails()) {

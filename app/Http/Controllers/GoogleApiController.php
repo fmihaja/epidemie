@@ -11,7 +11,7 @@ class GoogleApiController extends Controller
 {
     public function getData(Request $request)
     {
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDyPyovjWC9WCTo_b5JNVN_LNBs673UC1A";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=votre_api_key";
         $diseases = Disease::all()->map(function ($disease) {
             return [
                 'id' => $disease->id,

@@ -11,10 +11,11 @@ class Patient extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'lastName',
-        'firstName',
+        'lastname',
+        'firstname',
         'birthDate',
-        'email'
+        'email',
+        'gender'
     ];
 
     public function cas(): HasMany
